@@ -17,7 +17,6 @@
             pnpm
             typescript
             typescript-language-server
-            vite
           ];
         };
       });

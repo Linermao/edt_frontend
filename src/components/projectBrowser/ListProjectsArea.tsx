@@ -1,5 +1,6 @@
-import { Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useProjects } from "./useProjects";
+import { useNavigate } from "react-router-dom";
 
 const ListProjectsAreaMain = styled('main')(({ theme }) => ({  
     display: 'flex',
@@ -18,7 +19,8 @@ export function ListProjectsArea() {
 
     const { data, loading } = useProjects();
     const projects = data?.viewer.projects.edges.map((edge) => edge.node) ?? [];
-
+    const navigate = useNavigate();
+    
     return (
         <ListProjectsAreaMain>
             <ListProjectsAreaHeader>
@@ -41,25 +43,21 @@ export function ListProjectsArea() {
                 <TableBody>
                     {projects.map((row) => (
                         <TableRow
-                            key={row.name}
+                            key={row.id}
                             hover
                             sx={{
                                 '&:last-child td, &:last-child th': { border: 0 },
+                                cursor: 'pointer'
                             }}
+                            onClick={() => navigate(`/projects/${row.id}`)}
                         >
-                        <TableCell
-                            component="th"
-                            scope="row"
-                            sx={{
-                            fontWeight: 500,
-                            }}
-                        >
-                            {row.name}
-                        </TableCell>
+                            <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell>
 
-                        <TableCell align="right">
-                            ...
-                        </TableCell>
+                            <TableCell align="right">
+                                ...
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
