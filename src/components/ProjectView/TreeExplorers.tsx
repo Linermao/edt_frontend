@@ -1,6 +1,21 @@
+import { styled, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import type { TreeViewBaseItem } from '@mui/x-tree-view/models';
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
+
+const HeaderStyled = styled('div')(({ theme }) => ({  
+    display: 'flex',
+    flexDirection: 'row',
+    borderBottomColor: theme.palette.divider,
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+}));
+
+const HeaderTitleStyled = styled(Typography)(({ theme }) => ({  
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+}));
 
 const MUI_X_PRODUCTS: TreeViewBaseItem[] = [
   {
@@ -38,9 +53,12 @@ const MUI_X_PRODUCTS: TreeViewBaseItem[] = [
   },
 ];
 
-export function TreeView() {
+export function TreeExplorers() {
     return (
         <Box sx={{ minHeight: 352, minWidth: 250 }}>
+            <HeaderStyled>
+              <HeaderTitleStyled>Tree</HeaderTitleStyled>
+            </HeaderStyled>
             <RichTreeView items={MUI_X_PRODUCTS} />
         </Box>
     )

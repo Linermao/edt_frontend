@@ -1,14 +1,14 @@
 import { styled } from '@mui/material';
 import {
-  disableGlobalCursorStyles,
   Panel,
   PanelGroup,
   PanelResizeHandle,
 } from 'react-resizable-panels';
-import { NavigationBar } from '../navigationBar/NavigationBar';
-import { MainArea } from './MainArea';
-import { TreeView } from './TreeView';
-import { PropertyView } from './PropertyView';
+import { NavigationBar } from './NavigationBar';
+import { MainArea } from './ProjectView/MainArea';
+import { TreeExplorers } from './ProjectView/TreeExplorers';
+import { PropertyView } from './ProjectView/PropertyView';
+import { useParams } from 'react-router-dom';
 
 const ProjectViewStyled = styled('div')(() => ({  
     display: 'grid',
@@ -28,12 +28,16 @@ const PanelResizeHandleStyled = styled(PanelResizeHandle)(({ theme }) => ({
 }));
 
 export function ProjectView() {
+    const { projectId } = useParams<{ projectId: string }>();
+
+    console.log(projectId);
+    
     return (
         <ProjectViewStyled>
             <NavigationBar />
             <PanelGroup direction='horizontal'>
                 <Panel id='left' minSize={10}>
-                    <TreeView />
+                    <TreeExplorers />
                 </Panel>
                 <PanelResizeHandleStyled data-testid="left-resizer" />
                 <Panel id='main' minSize={50}>

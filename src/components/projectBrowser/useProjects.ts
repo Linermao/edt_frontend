@@ -1,34 +1,19 @@
 import { gql, useQuery } from "@apollo/client";
-import type { GQLGetProjectsQueryData, GQLGetProjectsQueryVariables, UseProjectsValue } from "./useProjects.types";
 import { useEffect } from "react";
 import { useMultiToast } from "../toastProvider/MultiToast";
+import type { Project } from "./useProjects.types";
 
-const getProjectsQuery = gql`
-    query getProjects($after: String, $before: String, $first: Int, $last: Int, $filter: ProjectFilter) {
-        viewer {
-            ...ViewerProjects
-        }
+const GQLGetProjects = gql`
+  query GetProjects {
+    projects {
+      projectId
+      name
     }
+  }
 `;
 
-export function useProjects (): UseProjectsValue {
-
-    const variables: GQLGetProjectsQueryVariables = {
-        after: null,
-        before: null,
-        first: 20,
-        last: null,
-        filter: null,
-    };
-
-    const {
-        data: projectData,
-        loading,
-        error,
-    } = useQuery<GQLGetProjectsQueryData, GQLGetProjectsQueryVariables>(
-        getProjectsQuery, 
-        { variables }
-    );
+export function useProjects () {
+    const { loading, error, data } = useQuery<{ projects: Project[] }>(GQLGetProjects);
 
     const { addErrorMessage } = useMultiToast();
     useEffect(() => {
@@ -37,5 +22,5 @@ export function useProjects (): UseProjectsValue {
         }
     }, [error]);
 
-    return { data: projectData, loading };
+    return { data: data?.projects ?? [], loading };
 };

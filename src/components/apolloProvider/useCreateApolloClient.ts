@@ -3,7 +3,7 @@ import { createFragmentRegistry, type FragmentRegistryAPI } from "@apollo/client
 import { ProjectFragment, ViewerFragment, ViewerProjectsFragment } from "./Viewer.fragment";
 
 export function useCreateApolloClient () {
-    let uri: string = 'http://localhost:8080/api/graphql';
+    let uri: string = 'http://localhost:3000/graphql';
 
     let fragmentRegistry: FragmentRegistryAPI = createFragmentRegistry();
     fragmentRegistry.register(ViewerFragment);

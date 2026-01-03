@@ -1,4 +1,4 @@
-import { Button, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Paper, Skeleton, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useProjects } from "./useProjects";
 import { useNavigate } from "react-router-dom";
 
@@ -17,10 +17,41 @@ const ListProjectsAreaHeader = styled('div')(() => ({
 
 export function ListProjectsArea() {
 
-    const { data, loading } = useProjects();
-    const projects = data?.viewer.projects.edges.map((edge) => edge.node) ?? [];
+    const { data: projects, loading } = useProjects();
     const navigate = useNavigate();
     
+    const renderRows = () => {
+        if (loading) {
+            return Array.from({ length: 5 }).map((_, idx) => (
+                <TableRow key={idx}>
+                <TableCell>
+                    <Skeleton variant="text" width="80%" />
+                </TableCell>
+                <TableCell align="right">
+                    <Skeleton variant="text" width="40%" />
+                </TableCell>
+                </TableRow>
+            ));
+        }
+
+        return projects.map((row) => (
+            <TableRow
+                key={row.projectId}
+                hover
+                sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                cursor: 'pointer',
+                }}
+                onClick={() => navigate(`/projects/${row.projectId}`)}
+            >
+                <TableCell component="th" scope="row">
+                {row.name}
+                </TableCell>
+                <TableCell align="right">...</TableCell>
+            </TableRow>
+        ));
+    };
+
     return (
         <ListProjectsAreaMain>
             <ListProjectsAreaHeader>
@@ -39,28 +70,7 @@ export function ListProjectsArea() {
                         </TableCell>
                     </TableRow>
                 </TableHead>
-
-                <TableBody>
-                    {projects.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            hover
-                            sx={{
-                                '&:last-child td, &:last-child th': { border: 0 },
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => navigate(`/projects/${row.id}`)}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-
-                            <TableCell align="right">
-                                ...
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+                <TableBody>{renderRows()}</TableBody>
             </Table>
             </TableContainer>
         </ListProjectsAreaMain>

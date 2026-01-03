@@ -1,6 +1,6 @@
 import { type PathRouteProps, Outlet } from "react-router-dom";
-import { ProjectBrowser } from "../projectBrowser/ProjectBrowser";
-import { ProjectView } from "../ProjectView/ProjectView";
+import { ProjectBrowser } from "../ProjectBrowser";
+import { ProjectView } from "../ProjectView";
 
 export const projectRoutes: PathRouteProps[] = [
   {

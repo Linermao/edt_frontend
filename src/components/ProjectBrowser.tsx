@@ -1,8 +1,8 @@
 import { Container, Grid, styled } from "@mui/material";
-import { Footer } from "../footer/Footer";
-import { NavigationBar } from "../navigationBar/NavigationBar";
-import { CreateProjectsArea } from "./CreateProjectsArea";
-import { ListProjectsArea } from "./ListProjectsArea";
+import { Footer } from "./Footer";
+import { NavigationBar } from "./NavigationBar";
+import { CreateProjectsArea } from "./projectBrowser/CreateProjectsArea";
+import { ListProjectsArea } from "./projectBrowser/ListProjectsArea";
 
 const ProjectBrowserView = styled('div')(() => ({  
     display: 'grid',
